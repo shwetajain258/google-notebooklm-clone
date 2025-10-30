@@ -166,7 +166,9 @@ app.post("/api/ask", async (req, res) => {
 
         // const pageNumber = matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1;
 
-        const pageNumber = pages.length === 1 ? 1 : (matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1);
+        // const pageNumber = pages.length === 1 ? 1 : (matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1);
+
+        const pageNumber = Math.min(pages.length, matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1);
 
         res.json({ answer: response.data, page: pageNumber });
     } catch (err) {
