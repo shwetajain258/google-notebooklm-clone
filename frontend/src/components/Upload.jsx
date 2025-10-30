@@ -9,7 +9,6 @@ export default function Upload({ onFileSelect, loading }) {
 
     //   Const API_BASE_URL = "http://localhost:5001";
     //   const API_BASE_URL = "https://google-notebooklm-clone-kpqu.onrender.com";
-    const [uploadId, setUploadId] = useState(null);
     const handleFileSelect = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
