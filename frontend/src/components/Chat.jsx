@@ -15,6 +15,8 @@ export default function ChatScreen({ onReset }) {
     const [error, setError] = useState("");
     const [openDialog, setOpenDialog] = useState(false);
 
+    //   Const API_BASE_URL = "http://localhost:5001";
+    //   const API_BASE_URL = "https://google-notebooklm-clone-kpqu.onrender.com";
     const handleSend = async () => {
 
         try {
@@ -22,10 +24,7 @@ export default function ChatScreen({ onReset }) {
             if (!input.trim()) return;
 
             setMessages((prev) => [...prev, { sender: "user", text: input }]);
-
-            const response = await axios.post("http://localhost:5001/api/ask", {
-                question: input,
-            });
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/ask`, { question: input });
 
             setMessages((prev) => [
                 ...prev,
@@ -51,7 +50,7 @@ export default function ChatScreen({ onReset }) {
 
         setMessages(updatedMessages);
     };
- const handleDeleteClick = () => setOpenDialog(true);
+    const handleDeleteClick = () => setOpenDialog(true);
 
     const handleConfirmDelete = () => {
         setMessages([]);
@@ -120,7 +119,7 @@ export default function ChatScreen({ onReset }) {
                 </button>
             </div>
 
-            <Dialog open={openDialog} onClose={handleCancelDelete}> 
+            <Dialog open={openDialog} onClose={handleCancelDelete}>
                 <DialogTitle><InfoOutlinedIcon fontSize="small" sx={{
                     color: "orange"
                 }} /> Upload new PDF?</DialogTitle>
