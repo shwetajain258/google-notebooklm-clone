@@ -17,8 +17,8 @@ app.use(cors());
 app.use(fileUpload());
 app.use(express.json({ limit: "50mb" }));
 
-let extractedText = "";
-let pages = [];
+// let extractedText = "";
+// let pages = [];
 const sessions = {};
 
 app.get("/", (req, res) => {
@@ -164,7 +164,9 @@ app.post("/api/ask", async (req, res) => {
             question.split(" ").some((word) => p.toLowerCase().includes(word.toLowerCase()))
         );
 
-        const pageNumber = matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1;
+        // const pageNumber = matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1;
+
+        const pageNumber = pages.length === 1 ? 1 : (matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1);
 
         res.json({ answer: response.data, page: pageNumber });
     } catch (err) {
