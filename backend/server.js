@@ -36,7 +36,9 @@ app.post("/api/upload", async (req, res) => {
 
         const data = await pdf(pdfFile.data);
         // pages = data.text.split("\f"); 
-        pages = data.text.split(/\n\s*\n/g);
+        // pages = data.text.split(/\n\s*\n/g);
+        pages = data.text.split(/\f/g); 
+
         extractedText = pages.join("\n");
 
         // const uploadId = uuidv4();
