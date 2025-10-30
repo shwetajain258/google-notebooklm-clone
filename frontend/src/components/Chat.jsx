@@ -14,7 +14,7 @@ export default function ChatScreen({ onReset }) {
     const [input, setInput] = useState("");
     const [error, setError] = useState("");
     const [openDialog, setOpenDialog] = useState(false);
-
+const sessionId = localStorage.getItem("sessionId");
     //   Const API_BASE_URL = "http://localhost:5001";
     //   const API_BASE_URL = "https://google-notebooklm-clone-kpqu.onrender.com";
     const handleSend = async () => {
@@ -24,7 +24,7 @@ export default function ChatScreen({ onReset }) {
             if (!input.trim()) return;
 
             setMessages((prev) => [...prev, { sender: "user", text: input }]);
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/ask`, { question: input });
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/ask`, { question: input, sessionId });
 
             setMessages((prev) => [
                 ...prev,
