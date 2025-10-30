@@ -19,6 +19,7 @@
     "express-fileupload": "^1.5.2",
     "multer": "^2.0.2",
     "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^5.4.296",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

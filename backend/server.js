@@ -32,17 +32,15 @@ app.post("/api/upload", async (req, res) => {
         }
 
         const pdfFile = req.files.file;
-        console.log("Received file:", pdfFile.name);
 
         const data = await pdf(pdfFile.data);
         // pages = data.text.split("\f"); 
-        // pages = data.text.split(/\n\s*\n/g);
-        pages = data.text.split(/\f/g); 
+        // const pages = data.text.split(/\n\s*\n/g);
+        const pages = data.text.split(/\f|\n\s*\n/g).map(p => p.trim()).filter(Boolean);
 
-        extractedText = pages.join("\n");
+        const extractedText = pages.join("\n");
 
         // const uploadId = uuidv4();
-
 
         const sessionId = uuidv4();
         sessions[sessionId] = { extractedText, pages };
@@ -159,18 +157,18 @@ app.post("/api/ask", async (req, res) => {
         );
 
         // const matchedPageIndex = pages.findIndex((p) =>
-        //     p.toLowerCase().includes(question.toLowerCase().split(" ")[0])
+        //     question.split(" ").some((word) => p.toLowerCase().includes(word.toLowerCase()))
         // );
-        // const pageNumber = matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1;
-        const matchedPageIndex = pages.findIndex((p) =>
-            question.split(" ").some((word) => p.toLowerCase().includes(word.toLowerCase()))
-        );
 
         // const pageNumber = matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1;
 
-        // const pageNumber = pages.length === 1 ? 1 : (matchedPageIndex !== -1 ? matchedPageIndex + 1 : 1);
+        const questionWords = question.toLowerCase().split(/\s+/);
 
-        const pageNumber = Math.min(pages.length, matchedPageIndex !== -1 ? matchedPageIndex : 1);
+        const pageNumber = pages.reduce((best, page, i) => {
+            const count = questionWords.reduce((c, w) => c + (page.toLowerCase().includes(w) ? 1 : 0), 0);
+            return count > best.count ? { index: i, count } : best;
+        }, { index: 0, count: 0 }).index + 1;
+
 
         res.json({ answer: response.data, page: pageNumber });
     } catch (err) {
