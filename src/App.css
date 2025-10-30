@@ -36,3 +36,44 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fafb;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center the upload card */
+.upload-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* After upload: split layout */
+.content-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.left-pane {
+  width: 50%;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-pane {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+
